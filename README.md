@@ -2,13 +2,17 @@
 
 🚀 A library that simplifies generic data writing, reading, and table management operations with Microsoft Access (MDB) files using .NET.
 
-Features
+# Features
 
-✅ Generic support for INSERT, UPDATE, and DELETE operations
+✅ Generic support for INSERT, UPDATE, and DELETE operations 
 
-✅ SEARCH support regardless of column names
+✅ SEARCH support regardless of column names 
 
-✅ Automatic column mapping to table schema
+✅ Automatic column mapping to table schema 
+
+✅ Select and process MDB files easily 
+
+✅ Compatible with: .NET Framework 4.7+ / .NET Core 
 
 ✅ Select and process MDB files easily
 
