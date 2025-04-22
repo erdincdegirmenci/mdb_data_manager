@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -14,6 +15,11 @@ namespace MDBRecordAdder
         private List<string> columnNames = new List<string>();
         public MainForm()
         {
+            string iconPath = Path.Combine(Directory.GetCurrentDirectory(), "mdbaddericon.ico");
+            if (File.Exists(iconPath))
+            {
+                this.Icon = new Icon(iconPath);
+            }
             InitializeComponent();
             dataGridViewColumns.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridViewColumns.MultiSelect = false;

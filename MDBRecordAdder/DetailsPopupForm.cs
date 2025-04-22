@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace MDBRecordAdder
@@ -12,6 +13,11 @@ namespace MDBRecordAdder
         private Button btnSave;
         public DetailsPopupForm(string currentValue)
         {
+            string iconPath = Path.Combine(Directory.GetCurrentDirectory(), "mdbaddericon.ico");
+            if (File.Exists(iconPath))
+            {
+                this.Icon = new Icon(iconPath);
+            }
             InitializeComponent();
             CellValue = currentValue;
             txtDetailValue.Text = currentValue;
