@@ -5,9 +5,13 @@
 # Features
 
 ✅ Generic support for INSERT, UPDATE, and DELETE operations 
+
 ✅ SEARCH support regardless of column names 
+
 ✅ Automatic column mapping to table schema 
+
 ✅ Select and process MDB files easily 
+
 ✅ Compatible with: .NET Framework 4.7+ / .NET Core 
 
 ## Kurulum
