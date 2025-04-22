@@ -14,8 +14,8 @@
 
 Bu projeyi doğrudan kendi çözümüne `Class Library` olarak ekleyebilir veya NuGet paketi haline getirebilirsiniz.
 
+![image](https://github.com/user-attachments/assets/c12daff4-20c9-4059-89c7-1d14e59ed352)
+
 ```bash
 git clone https://github.com/kullaniciadi/AccessDbHelper.git
 
-
-![image](https://github.com/user-attachments/assets/c12daff4-20c9-4059-89c7-1d14e59ed352)
