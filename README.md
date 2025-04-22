@@ -5,6 +5,7 @@
 ## Özellikler
 
 - ✅ Generic `INSERT`,`UPDATE`,`DELETE` desteği
+- ✅ Kolon farketmeksizin `SEARCH` desteği
 - ✅ Tabloya otomatik sütun eşleştirme
 - ✅ MDB dosyasını seçme ve işleme
 - ✅ Uyumlu: .NET Framework 4.7+ / .NET Core (Jet/ACE kısıtlamalarına bağlı)
