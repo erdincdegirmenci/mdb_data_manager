@@ -1,15 +1,13 @@
 # MDB RECORD ADDER
 
-🚀 .NET ile Microsoft Access (MDB) dosyalarına generic veri yazma, okuma ve tablo yönetimi işlemlerini kolaylaştıran bir kütüphane.
+🚀 A library that simplifies generic data writing, reading, and table management operations with Microsoft Access (MDB) files using .NET.
 
-## Özellikler
-
-- ✅ Generic `INSERT`,`UPDATE`,`DELETE` desteği
-- ✅ Kolon farketmeksizin `SEARCH` desteği
-- ✅ Tabloya otomatik sütun eşleştirme
-- ✅ MDB dosyasını seçme ve işleme
-- ✅ Uyumlu: .NET Framework 4.7+ / .NET Core
-
+Features
+✅ Generic support for INSERT, UPDATE, and DELETE operations
+✅ SEARCH support regardless of column names
+✅ Automatic column mapping to table schema
+✅ Select and process MDB files easily
+✅ Compatible with: .NET Framework 4.7+ / .NET Core
 ![image](https://github.com/user-attachments/assets/c12daff4-20c9-4059-89c7-1d14e59ed352)
 
 ```bash
