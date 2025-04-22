@@ -8,8 +8,7 @@
 - ✅ Kolon farketmeksizin `SEARCH` desteği
 - ✅ Tabloya otomatik sütun eşleştirme
 - ✅ MDB dosyasını seçme ve işleme
-- ✅ Uyumlu: .NET Framework 4.7+ / .NET Core (Jet/ACE kısıtlamalarına bağlı)
-- ✅ Windows Forms, Console veya Service projelerinde kolay entegrasyon
+- ✅ Uyumlu: .NET Framework 4.7+ / .NET Core
 
 ## Kurulum
 
