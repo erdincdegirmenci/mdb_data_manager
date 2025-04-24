@@ -276,7 +276,7 @@ namespace MDBDataManager
                         else
                         {
                             DataTable lastRowTable = data.Clone();
-                            lastRowTable.ImportRow(data.Rows[data.Rows.Count - 1]); 
+                            lastRowTable.ImportRow(data.Rows[data.Rows.Count - 1]);
 
                             dataGridViewColumns.DataSource = lastRowTable;
                         }
@@ -309,18 +309,15 @@ namespace MDBDataManager
                 string columns = string.Join(", ", columnNames);
                 List<string> values = new List<string>();
                 List<string> updateValues = new List<string>();
-                string logicalRefValue = null;
+                string firstColumnValue = row.Cells[columnNames[0]].Value?.ToString() ?? "";
 
                 foreach (string col in columnNames)
                 {
                     var cellValue = row.Cells[col].Value?.ToString() ?? "";
                     values.Add($"'{cellValue.Replace("'", "''")}'");
 
-                    if (col.ToUpper() == "LOGICALREF")
-                    {
-                        logicalRefValue = cellValue;
-                    }
-                    else
+
+                    if (col != columnNames[0])
                     {
                         updateValues.Add($"{col} = '{cellValue.Replace("'", "''")}'");
                     }
@@ -330,9 +327,10 @@ namespace MDBDataManager
                 {
                     connection.Open();
 
-                    if (!string.IsNullOrEmpty(logicalRefValue))
+                    if (!string.IsNullOrEmpty(firstColumnValue))
                     {
-                        string updateQuery = $"UPDATE {selectedTable} SET {string.Join(", ", updateValues)} WHERE LOGICALREF = {logicalRefValue}"; OleDbCommand updateCommand = new OleDbCommand(updateQuery, connection);
+                        string updateQuery = $"UPDATE {selectedTable} SET {string.Join(", ", updateValues)} WHERE {columnNames[0]} = {firstColumnValue}";
+                        OleDbCommand updateCommand = new OleDbCommand(updateQuery, connection);
                         int updatedRows = updateCommand.ExecuteNonQuery();
 
                         if (updatedRows > 0)
