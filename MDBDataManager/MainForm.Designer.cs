@@ -18,6 +18,7 @@ namespace MDBDataManager
         }
         private void InitializeComponent()
         {
+            this.chkShowAll = new System.Windows.Forms.CheckBox();
             this.contextMenuStrip = new ContextMenuStrip();
             this.showDetailsMenuItem = new ToolStripMenuItem("Detayları Göster");
             this.txtSearch = new TextBox();
@@ -132,8 +133,21 @@ namespace MDBDataManager
             this.btnDeleteRecord.Cursor = Cursors.Hand;
             this.btnDeleteRecord.Click += btnDeleteRecord_Click;
 
+            // 
+            // chkShowAll
+            // 
+            this.chkShowAll.AutoSize = true;
+            this.chkShowAll.Location = new System.Drawing.Point(12, 12);
+            this.chkShowAll.Name = "chkShowAll";
+            this.chkShowAll.Size = new System.Drawing.Size(95, 17);
+            this.chkShowAll.TabIndex = 0;
+            this.chkShowAll.Text = "Tüm Kayıtlar";
+            this.chkShowAll.UseVisualStyleBackColor = true;
+            this.chkShowAll.CheckedChanged += new System.EventHandler(this.chkShowAll_CheckedChanged);
+
             // Main Form Setup
             this.ClientSize = new Size(750, 360);
+            this.Controls.Add(this.chkShowAll);
             this.Controls.Add(this.btnSelectFile);
             this.Controls.Add(this.lblFileName);
             this.Controls.Add(this.btnAddRecord);
@@ -164,5 +178,6 @@ namespace MDBDataManager
         private Button btnSelectFile;
         private Label lblFileName;
         private DataGridViewCell selectedCell = null;
+        private System.Windows.Forms.CheckBox chkShowAll;
     }
 }

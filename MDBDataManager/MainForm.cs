@@ -5,6 +5,7 @@ using System.Data.OleDb;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Windows.Forms;
 
 namespace MDBDataManager
@@ -13,6 +14,8 @@ namespace MDBDataManager
     {
         private string connectionString;
         private List<string> columnNames = new List<string>();
+        private string currentSelectedTable = string.Empty;
+
         public MainForm()
         {
             string iconPath = Path.Combine(Directory.GetCurrentDirectory(), "mdbaddericon.ico");
@@ -24,6 +27,15 @@ namespace MDBDataManager
             dataGridViewColumns.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridViewColumns.MultiSelect = false;
         }
+        private void chkShowAll_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(currentSelectedTable))
+            {
+                LoadTableColumns(currentSelectedTable);
+            }
+        }
+
+
         private void btnSelectFile_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -34,8 +46,8 @@ namespace MDBDataManager
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     connectionString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + openFileDialog.FileName;
-                    lblFileName.Text = "Seçilen Dosya: " + openFileDialog.FileName; 
-                    LoadTableNames(); 
+                    lblFileName.Text = "Seçilen Dosya: " + openFileDialog.FileName;
+                    LoadTableNames();
                 }
                 else
                 {
@@ -157,14 +169,14 @@ namespace MDBDataManager
         }
         private void comboBoxTables_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string selectedTable = comboBoxTables.SelectedItem.ToString();
-            LoadTableColumns(selectedTable);
+            currentSelectedTable = comboBoxTables.SelectedItem.ToString();
+            LoadTableColumns(currentSelectedTable);
         }
         private void txtSearch_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                btnSearch.PerformClick(); 
+                btnSearch.PerformClick();
             }
         }
         private void btnSearch_Click(object sender, EventArgs e)
@@ -243,19 +255,30 @@ namespace MDBDataManager
                     {
                         string firstColumn = columnData.Columns[0].ColumnName;
 
-                        string query = $"SELECT TOP 1 * FROM {tableName} ORDER BY {firstColumn} DESC";
+                        string query = $"SELECT * FROM {tableName}";
 
                         OleDbDataAdapter adapter = new OleDbDataAdapter(query, connection);
                         DataTable data = new DataTable();
                         adapter.Fill(data);
 
-                        columnNames.Clear();
+
                         foreach (DataColumn col in data.Columns)
                         {
                             columnNames.Add(col.ColumnName);
                         }
+                        columnNames.Clear();
 
-                        dataGridViewColumns.DataSource = data;
+                        if (chkShowAll.Checked && data.Rows.Count > 0)
+                        {
+                            dataGridViewColumns.DataSource = data;
+                        }
+                        else
+                        {
+                            DataTable lastRowTable = data.Clone();
+                            lastRowTable.ImportRow(data.Rows[data.Rows.Count - 1]); 
+
+                            dataGridViewColumns.DataSource = lastRowTable;
+                        }
                     }
                     else
                     {
@@ -268,6 +291,7 @@ namespace MDBDataManager
                 MessageBox.Show("Kolonlar yüklenirken hata oluştu: " + ex.Message);
             }
         }
+
         private void btnAddRecord_Click(object sender, EventArgs e)
         {
             try
@@ -279,12 +303,12 @@ namespace MDBDataManager
                 }
 
                 string selectedTable = comboBoxTables.SelectedItem.ToString();
-                DataGridViewRow row = dataGridViewColumns.Rows[dataGridViewColumns.Rows.Count - 2]; 
+                DataGridViewRow row = dataGridViewColumns.Rows[dataGridViewColumns.Rows.Count - 2];
 
                 string columns = string.Join(", ", columnNames);
                 List<string> values = new List<string>();
                 List<string> updateValues = new List<string>();
-                string logicalRefValue = null; 
+                string logicalRefValue = null;
 
                 foreach (string col in columnNames)
                 {
@@ -325,7 +349,7 @@ namespace MDBDataManager
                     }
                 }
 
-                LoadTableColumns(selectedTable); 
+                LoadTableColumns(selectedTable);
             }
             catch (Exception ex)
             {
