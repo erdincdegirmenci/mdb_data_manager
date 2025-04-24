@@ -18,7 +18,7 @@
 
 ✅ Compatible with: .NET Framework 4.7+ / .NET Core
 
-![image](https://github.com/user-attachments/assets/c12daff4-20c9-4059-89c7-1d14e59ed352)
+![image](https://github.com/user-attachments/assets/ef864f94-67e7-4050-8d25-19b6bc847634)
 
 ```bash
 git clone https://github.com/erdincdegirmenci/mdb_record_adder.git
