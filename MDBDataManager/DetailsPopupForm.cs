@@ -3,7 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
-namespace MDBRecordAdder
+namespace MDBDataManager
 {
     public partial class DetailsPopupForm : Form
     {

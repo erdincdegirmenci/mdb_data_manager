@@ -2,7 +2,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace MDBRecordAdder
+namespace MDBDataManager
 {
     partial class MainForm
     {
@@ -109,7 +109,7 @@ namespace MDBRecordAdder
             this.btnAddRecord.Name = "btnAddRecord";
             this.btnAddRecord.Size = new Size(350, 40);
             this.btnAddRecord.TabIndex = 2;
-            this.btnAddRecord.Text = "Add Record";
+            this.btnAddRecord.Text = "Değişiklikleri Kaydet";
             this.btnAddRecord.UseVisualStyleBackColor = true;
             this.btnAddRecord.BackColor = Color.FromArgb(0, 178, 148); // Green
             this.btnAddRecord.ForeColor = Color.White;
@@ -123,7 +123,7 @@ namespace MDBRecordAdder
             this.btnDeleteRecord.Name = "btnDeleteRecord";
             this.btnDeleteRecord.Size = new Size(350, 40);
             this.btnDeleteRecord.TabIndex = 4;
-            this.btnDeleteRecord.Text = "Delete Record";
+            this.btnDeleteRecord.Text = "Kaydı Sil";
             this.btnDeleteRecord.UseVisualStyleBackColor = true;
             this.btnDeleteRecord.BackColor = Color.FromArgb(232, 17, 35); // Red
             this.btnDeleteRecord.ForeColor = Color.White;
@@ -143,7 +143,7 @@ namespace MDBRecordAdder
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.txtSearch);
             this.Name = "MainForm";
-            this.Text = "MDB RECORD ADDER";
+            this.Text = "MDB Kayıt Yöneticisi";
             this.StartPosition = FormStartPosition.CenterScreen;
             this.BackColor = Color.White;
 
