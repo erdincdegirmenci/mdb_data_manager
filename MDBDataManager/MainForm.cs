@@ -169,6 +169,7 @@ namespace MDBDataManager
         }
         private void comboBoxTables_SelectedIndexChanged(object sender, EventArgs e)
         {
+            txtSearch.Text = String.Empty;
             currentSelectedTable = comboBoxTables.SelectedItem.ToString();
             LoadTableColumns(currentSelectedTable);
         }
@@ -261,12 +262,12 @@ namespace MDBDataManager
                         DataTable data = new DataTable();
                         adapter.Fill(data);
 
+                        columnNames.Clear();
 
                         foreach (DataColumn col in data.Columns)
                         {
                             columnNames.Add(col.ColumnName);
                         }
-                        columnNames.Clear();
 
                         if (chkShowAll.Checked && data.Rows.Count > 0)
                         {
