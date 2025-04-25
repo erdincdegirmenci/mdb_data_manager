@@ -304,7 +304,7 @@ namespace MDBDataManager
                 }
 
                 string selectedTable = comboBoxTables.SelectedItem.ToString();
-                DataGridViewRow row = dataGridViewColumns.Rows[dataGridViewColumns.Rows.Count - 2];
+                DataGridViewRow row = dataGridViewColumns.CurrentRow;
 
                 string columns = string.Join(", ", columnNames);
                 List<string> values = new List<string>();
