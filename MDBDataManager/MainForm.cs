@@ -34,8 +34,6 @@ namespace MDBDataManager
                 LoadTableColumns(currentSelectedTable);
             }
         }
-
-
         private void btnSelectFile_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -292,7 +290,6 @@ namespace MDBDataManager
                 MessageBox.Show("Kolonlar yüklenirken hata oluştu: " + ex.Message);
             }
         }
-
         private void btnAddRecord_Click(object sender, EventArgs e)
         {
             try
@@ -326,20 +323,30 @@ namespace MDBDataManager
                 using (OleDbConnection connection = new OleDbConnection(connectionString))
                 {
                     connection.Open();
+                    string checkQuery = $"SELECT COUNT(*) FROM {selectedTable} WHERE {columnNames[0]} = {firstColumnValue}";
+                    OleDbCommand checkCommand = new OleDbCommand(checkQuery, connection);
+                    object result = checkCommand.ExecuteScalar();
+                    int existingCount = Convert.ToInt32(result);
 
-                    if (!string.IsNullOrEmpty(firstColumnValue))
+                    if (existingCount > 0)
                     {
-                        string updateQuery = $"UPDATE {selectedTable} SET {string.Join(", ", updateValues)} WHERE {columnNames[0]} = {firstColumnValue}";
-                        OleDbCommand updateCommand = new OleDbCommand(updateQuery, connection);
-                        int updatedRows = updateCommand.ExecuteNonQuery();
+                        var dialogResult = MessageBox.Show(
+                            $"#{firstColumnValue} numaralı kayıt zaten mevcut. Güncellemek istiyor musunuz?",
+                            "Güncelleme Onayı",
+                            MessageBoxButtons.YesNo,
+                            MessageBoxIcon.Question
+                        );
 
-                        if (updatedRows > 0)
+                        if (dialogResult == DialogResult.Yes)
                         {
-                            MessageBox.Show("Kayıt başarıyla güncellendi!");
-                        }
-                        else
-                        {
-                            InsertNewRecord(connection, selectedTable, columns, values);
+                            string updateQuery = $"UPDATE {selectedTable} SET {string.Join(", ", updateValues)} WHERE {columnNames[0]} = {firstColumnValue}";
+                            OleDbCommand updateCommand = new OleDbCommand(updateQuery, connection);
+                            int updatedRows = updateCommand.ExecuteNonQuery();
+
+                            if (updatedRows > 0)
+                            {
+                                MessageBox.Show("Kayıt başarıyla güncellendi!");
+                            }
                         }
                     }
                     else
@@ -391,18 +398,26 @@ namespace MDBDataManager
                     return;
                 }
 
-                string deleteQuery = $"DELETE FROM {selectedTable} WHERE {keyColumn} = {keyValue}";
+                var dialogResult = MessageBox.Show(
+                        $"#{keyValue} numaralı kayıt silinecek. Onaylıyor musunuz?",
+                        "Güncelleme Onayı",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question
+                );
 
-
-                using (OleDbConnection connection = new OleDbConnection(connectionString))
+                if (dialogResult == DialogResult.Yes)
                 {
-                    connection.Open();
-                    OleDbCommand command = new OleDbCommand(deleteQuery, connection);
-                    command.ExecuteNonQuery();
-                }
+                    string deleteQuery = $"DELETE FROM {selectedTable} WHERE {keyColumn} = {keyValue}";
+                    using (OleDbConnection connection = new OleDbConnection(connectionString))
+                    {
+                        connection.Open();
+                        OleDbCommand command = new OleDbCommand(deleteQuery, connection);
+                        command.ExecuteNonQuery();
+                    }
 
-                MessageBox.Show("Kayıt başarıyla silindi!");
-                LoadTableColumns(selectedTable);
+                    MessageBox.Show("Kayıt başarıyla silindi!");
+                    LoadTableColumns(selectedTable);
+                }
             }
             catch (Exception ex)
             {
